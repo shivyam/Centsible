@@ -1,10 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App'; 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+document.getElementById('scrapeBtn').addEventListener('click', async () => {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    
+    chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      function: scrapePage
+    }, (results) => {
+      const data = results[0].result;
+      document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+    });
+  });
+  
+  function scrapePage() {
+    // Example: Scrape all text content from paragraph tags
+    const paragraphs = Array.from(document.querySelectorAll('p'));
+    return paragraphs.map(p => p.innerText);
+  }
