@@ -82,7 +82,7 @@ const ScraperComponent: React.FC<ScraperComponentProps> = ({ onScrapedData, onSu
 
   return (
     <div>
-      <button onClick={handleScrape}>Scrape Page</button>
+      <button className="border rounded-lg bg-blue-200 p-2 m-2" onClick={handleScrape}>Scrape Page</button>
     </div>
   );
 };

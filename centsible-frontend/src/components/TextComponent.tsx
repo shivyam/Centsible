@@ -1,11 +1,10 @@
-
 import logo from '/logo.png';
 
 import { IoPersonOutline } from "react-icons/io5";
 
 type Message = {
-    user: string;
-    bot: string;
+    user?: string;
+    bot?: string;
   };
 
 type Props = {
@@ -20,7 +19,7 @@ const TextComponent = (props: Props) => {
         <div className="flex flex-col gap-y-4 pb-8 items-center justify-center">
             {props.history.map((item,index) => (
                 item.bot ?         
-                <div key={index} className="w-fit flex gap-2 justify-start">
+                <div key={index} className="w-[300px] flex gap-2 justify-start">
                     <div className="w-10 rounded-full outline outline-1"> 
                         <img src={logo} />
                     </div>
@@ -28,7 +27,7 @@ const TextComponent = (props: Props) => {
                 </div> 
             :
                 (item.user  ? 
-                    <div className="w-fit flex gap-2 justify-end">
+                    <div className="w-[300px] flex gap-2 justify-end">
                     <div className="w-fit px-6 py-2 border rounded-md">{item.user}</div>
                         <div className="w-10 rounded-full outline outline-1 flex items-center justify-center"> 
                             <IoPersonOutline />
