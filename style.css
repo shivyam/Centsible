@@ -1,0 +1,13 @@
+*{
+    background-color: aquamarine;
+    width:50%;
+    height: auto;
+} 
+body {
+    width: 200px;
+    padding: 10px;
+  }
+
+button {
+    margin-top: 10px;
+  }

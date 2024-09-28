@@ -1,12 +1,14 @@
 document.getElementById('scrapeBtn').addEventListener('click', async () => {
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+    let queryOptions = { active: true, currentWindow: true };
+    const [tab] = await chrome.tabs.query(queryOptions);
     
     chrome.scripting.executeScript({
       target: { tabId: tab.id },
       function: scrapePage
     }, (results) => {
-      const data = results[0].result;
-      document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+      const scrapedData = results[0].result;
+      document.getElementById('output').textContent = JSON.stringify(scrapedData, null, 2);
     });
   });
   
