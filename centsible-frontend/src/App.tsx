@@ -1,30 +1,47 @@
-import './App.css'
-
+import './App.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-
+import ScraperComponent from './ScraperComponent.tsx';
+import { useState } from "react";
 
 function App() {
+  const [scrapedData, setScrapedData] = useState<string | null>(null);
+  const [summary, setSummary] = useState<string | null>(null);
 
-  return(
-  <Tabs>
-    <TabList>
-      <Tab>Summary</Tab>
-      <Tab>ChatBot</Tab>
-      <Tab>Resources</Tab>
-    </TabList>
+  return (
+    <Tabs>
+      <TabList>
+        <Tab>Summary</Tab>
+        <Tab>ChatBot</Tab>
+      </TabList>
 
-    <TabPanel>
-      <h2>Summary: </h2>
-    </TabPanel>
-    <TabPanel>
-      <h2>ChatBot: </h2>
-    </TabPanel>
-    <TabPanel>
-      <h2>Additional Resources: </h2>
-    </TabPanel>
-  </Tabs>
-  )
+      <TabPanel>
+        <h2>Summary</h2>
+        {/* Pass the state handler functions as props to ScraperComponent */}
+        <ScraperComponent
+          onScrapedData={(data) => setScrapedData(data)}
+          onSummaryData={(summary) => setSummary(summary)}
+        />
+
+        {/* Display the scraped data */}
+        <div id="output" style={{ marginTop: '20px', whiteSpace: 'pre-wrap' }}>
+          <h3>Scraped Data:</h3>
+          {scrapedData ? <pre>{scrapedData}</pre> : "No data scraped yet."}
+        </div>
+
+        {/* Display the summarized data */}
+        <div id="summary" style={{ marginTop: '20px', whiteSpace: 'pre-wrap' }}>
+          <h3>Summarized Data:</h3>
+          {summary ? <pre>{summary}</pre> : "No summary available yet."}
+        </div>
+      </TabPanel>
+
+      <TabPanel>
+        <h2>ChatBot</h2>
+        {/* Add your chatbot component here */}
+      </TabPanel>
+    </Tabs>
+  );
 }
 
 export default App;
