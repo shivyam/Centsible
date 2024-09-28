@@ -6,7 +6,7 @@ $ pip install google-generativeai
 # change it so system instructions has website summary context 
 # also want output to change in react 
 import os
-from fastapi import FastAPI, APIRouter, HTTPException
+# from fastapi import FastAPI, APIRouter, HTTPException
 from pydantic import BaseModel
 import google.generativeai as genai
 from dotenv import load_dotenv
@@ -34,43 +34,43 @@ model = genai.GenerativeModel(
   # See https://ai.google.dev/gemini-api/docs/safety-settings
   system_instruction="You are a financial advisor to those who do not have much background. Eexplain concepts in detail and give examples that are easy for new learners to understand. give the user prompting questions if needed",
 )
-app = FastAPI()
-router = APIRouter()
+# app = FastAPI()
+# router = APIRouter()
 
 # Pydantic model for user input
-class UserInput(BaseModel):
-    input_text: str
+# class UserInput(BaseModel):
+#     input_text: str
 
 # Endpoint to handle chat requests
-@router.post("/chat")
-async def chat(user_input: UserInput):
-    try:
-        # Create a new chat session
-        chat_session = model.start_chat()
+# @router.post("/chat")
+# async def chat(user_input: UserInput):
+#     try:
+#         # Create a new chat session
+#         chat_session = model.start_chat()
         
-        # Send the user input to the model
-        response = chat_session.send_message(user_input.input_text)
-        model_response = response.text
+#         # Send the user input to the model
+#         response = chat_session.send_message(user_input.input_text)
+#         model_response = response.text
         
-        # Return the model response
-        return {"response": model_response}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+#         # Return the model response
+#         return {"response": model_response}
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=str(e))
 
-# Include the router
-app.include_router(router)
+# # Include the router
+# app.include_router(router)
 
-# print("Bot: Hi, how can I help you?")
-# history_tracker =[]
-# chat_session = model.start_chat(history=history_tracker)
-# while True: 
-#     user_input = input("You: ")
+print("Bot: Hi, how can I help you?")
+history_tracker =[]
+chat_session = model.start_chat(history=history_tracker)
+while True: 
+    user_input = input("You: ")
     
-#     response = chat_session.send_message(user_input)
+    response = chat_session.send_message(user_input)
 
-#     model_response = response.text
-#     print(model_response)
+    model_response = response.text
+    print(model_response)
 
-#     # Append the user input and model response to the history
-#     history_tracker.append({"role": "user", "content": user_input})
-#     history_tracker.append({"role": "model", "content": model_response})
+    # Append the user input and model response to the history
+    history_tracker.append({"role": "user", "content": user_input})
+    history_tracker.append({"role": "model", "content": model_response})
