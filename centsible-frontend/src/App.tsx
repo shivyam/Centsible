@@ -16,7 +16,7 @@ function App() {
       </TabList>
 
       <TabPanel>
-        <h2>Summary</h2>
+        <h1 className="font-bold text-3xl">Summary</h1>
         {/* Pass the state handler functions as props to ScraperComponent */}
         <ScraperComponent
           onScrapedData={(data) => setScrapedData(data)}
@@ -25,14 +25,14 @@ function App() {
 
         {/* Display the scraped data */}
         <div id="output" className="text-wrap">
-          <h3>Scraped Data:</h3>
-          {scrapedData ? <pre>{scrapedData}</pre> : "No data scraped yet."}
+          <h3 className="font-bold">Scraped Data:</h3>
+          {scrapedData ? <p className="pb-4">{scrapedData}</p> : <p className="pb-4">No data scraped yet.</p>}
         </div>
 
         {/* Display the summarized data */}
         <div id="summary" className="text-wrap">
-          <h3>Summarized Data:</h3>
-          {summary ? <pre>{summary}</pre> : "No summary available yet."}
+          <h3 className="font-bold">Summarized Data:</h3>
+          {summary ? <p>{summary}</p> : <p>No summary available yet. </p>}
         </div>
       </TabPanel>
 
