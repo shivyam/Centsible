@@ -1,49 +1,44 @@
+"""
+Install the Google AI Python SDK
 
-
+$ pip install google-generativeai
+"""
+# change it so system instructions has website summary context 
+# also want output to change in react 
 import os
 import google.generativeai as genai
 
-from dotenv import load_dotenv
-load_dotenv()
-
-
-genai.configure(api_key=os.environ["GEMINI_API_KEY"])
+genai.configure(api_key="AIzaSyCNn5mn0P_rHc3SwZHoOhP3tswC9aich1Q")
 
 # Create the model
 generation_config = {
-  "temperature": 0.5,
+  "temperature": 0,
   "top_p": 0.95,
   "top_k": 64,
-  "max_output_tokens": 8192,
+  "max_output_tokens": 200,
   "response_mime_type": "application/json",
 }
 
 model = genai.GenerativeModel(
-  model_name="gemini-1.5-pro",
+  model_name="gemini-1.5-flash",
   generation_config=generation_config,
-  system_instructions = "You are simplifying complex concepts into simple terms and brief, in-depth explanations",
+  # safety_settings = Adjust safety settings
+  # See https://ai.google.dev/gemini-api/docs/safety-settings
+  system_instruction="You are a financial advisor to those who do not have much background. Eexplain concepts in detail and give examples that are easy for new learners to understand. give the user prompting questions if needed",
 )
 
-print("Bot: hello, how cna i help you?")
-history = [{
-        "role": "user",
-        "parts": "scraped data"
-      }]
 
-while True:
-
+print("Bot: Hi, how can I help you?")
+history_tracker =[]
+chat_session = model.start_chat(history=history_tracker)
+while True: 
     user_input = input("You: ")
-
-    chat_session = model.start_chat(
-        history= history
-    )
-
+    
     response = chat_session.send_message(user_input)
 
     model_response = response.text
-    history.append({"role" : "user", "parts": [user_input]})
-    history.append({"role" : "model", "parts": [model_response]})
-
     print(model_response)
-    print(chat_session.history)
-    
+
+    # Append the user input and model response to the history
+    history_tracker.append({"role": "user", "content": user_input})
+    history_tracker.append({"role": "model", "content": model_response})
