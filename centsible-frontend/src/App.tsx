@@ -3,7 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import ScraperComponent from './ScraperComponent.tsx';
 import { useState } from "react";
-
+import ChatBot from './ChatBot.tsx';
 function App() {
   const [scrapedData, setScrapedData] = useState<string | null>(null);
   const [summary, setSummary] = useState<string | null>(null);
@@ -38,7 +38,7 @@ function App() {
 
       <TabPanel>
         <h2>ChatBot</h2>
-        {/* Add your chatbot component here */}
+        <ChatBot />
       </TabPanel>
     </Tabs>
   );
