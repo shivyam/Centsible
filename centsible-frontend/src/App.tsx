@@ -24,13 +24,13 @@ function App() {
         />
 
         {/* Display the scraped data */}
-        <div id="output" style={{ marginTop: '20px', whiteSpace: 'pre-wrap' }}>
+        <div id="output" className="text-wrap">
           <h3>Scraped Data:</h3>
           {scrapedData ? <pre>{scrapedData}</pre> : "No data scraped yet."}
         </div>
 
         {/* Display the summarized data */}
-        <div id="summary" style={{ marginTop: '20px', whiteSpace: 'pre-wrap' }}>
+        <div id="summary" className="text-wrap">
           <h3>Summarized Data:</h3>
           {summary ? <pre>{summary}</pre> : "No summary available yet."}
         </div>
