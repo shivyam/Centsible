@@ -1,11 +1,11 @@
-import React from 'react'
+// import React from 'react'
 
-type Props = {
+// type Props = {
 
 
-}
+// }
 
-const ChatBot = (props: Props) => {
+const ChatBot = () => {
   return (
     <>
     <div className="font-bold text-2xl">Welcome!</div>

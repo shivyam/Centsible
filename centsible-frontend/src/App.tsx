@@ -8,6 +8,7 @@ function App() {
   const [scrapedData, setScrapedData] = useState<string | null>(null);
   const [summary, setSummary] = useState<string | null>(null);
 
+
   return (
     <Tabs>
       <TabList>
@@ -20,19 +21,23 @@ function App() {
         {/* Pass the state handler functions as props to ScraperComponent */}
         <ScraperComponent
           onScrapedData={(data) => setScrapedData(data)}
-          onSummaryData={(summary) => setSummary(summary)}
+          onSummaryData={(summary) => {
+            console.log("New Summary:", summary); // Log the summary when it's updated
+            setSummary(summary);
+          }}
         />
 
         {/* Display the scraped data */}
-        <div id="output" style={{ marginTop: '20px', whiteSpace: 'pre-wrap' }}>
+        <div id="output" className="w-[600px]">
           <h3>Scraped Data:</h3>
-          {scrapedData ? <pre>{scrapedData}</pre> : "No data scraped yet."}
+          {scrapedData ? <p className="text-wrap">{scrapedData}</p> : "No data scraped yet."}
         </div>
 
         {/* Display the summarized data */}
-        <div id="summary" style={{ marginTop: '20px', whiteSpace: 'pre-wrap' }}>
+        <div id="summary" className="w-[600px]">
           <h3>Summarized Data:</h3>
-          {summary ? <pre>{summary}</pre> : "No summary available yet."}
+          
+          {summary ? <p className="text-wrap">{summary}</p> : "No summary available yet."}
         </div>
       </TabPanel>
 
