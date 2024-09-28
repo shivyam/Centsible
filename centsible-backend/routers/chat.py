@@ -23,7 +23,7 @@ class ChatRequest(BaseModel):
     question: str
 
 # Define the chatbot endpoint
-@router.post("/chatbot/")
+@router.post("/chatbot/" , tags=["chatbot"])
 async def chatbot(request: ChatRequest):
     # Set up API key
     api_key = "AIzaSyCNn5mn0P_rHc3SwZHoOhP3tswC9aich1Q"

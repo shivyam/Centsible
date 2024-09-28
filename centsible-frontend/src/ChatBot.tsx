@@ -17,7 +17,10 @@ const ChatBot = () => {
         localStorage.setItem("history", JSON.stringify(history))
         
     }, [history])
+
     
+    
+        
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setInput(event?.target.value);
     }
