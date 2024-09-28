@@ -1,11 +1,13 @@
 *{
-    background-color: aquamarine;
-    width:50%;
+    width:fit-content;
     height: auto;
 } 
 body {
-    width: 200px;
+    background-color: aquamarine;
+    width:fit-content;
+    height:auto;
     padding: 10px;
+    
   }
 
 button {
