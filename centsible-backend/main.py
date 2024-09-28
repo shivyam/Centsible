@@ -5,3 +5,4 @@ app = FastAPI()
 
 # Include the router directly
 app.include_router(summary_router)
+
