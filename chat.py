@@ -7,8 +7,15 @@ $ pip install google-generativeai
 # also want output to change in react 
 import os
 import google.generativeai as genai
+from dotenv import load_dotenv
+# pip install python-dotenv
+load_dotenv()
 
-genai.configure(api_key="AIzaSyCNn5mn0P_rHc3SwZHoOhP3tswC9aich1Q")
+# python -m venv venv
+# source venv/bin/activate
+api_key = os.getenv("GENAI_API_KEY")
+
+genai.configure(api_key=api_key)
 
 # Create the model
 generation_config = {
