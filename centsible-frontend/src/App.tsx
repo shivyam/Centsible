@@ -2,14 +2,13 @@ import './App.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 
-import ChatBot from './ChatBot.tsx';
+import ChatBot from './components/ChatBot.tsx';
 import Summary from './components/Summary.tsx';
 
 function App() {
   return (
- 
     <>
-
+    <p className="text-3xl font-bold pb-3">Centsible</p>
     <Tabs>
       <TabList>
         <Tab>Summary</Tab>
@@ -17,12 +16,10 @@ function App() {
       </TabList>
 
       <TabPanel>
-        <h1 className="font-bold text-3xl pb-2">Summary</h1>
         <Summary />
       </TabPanel>
 
       <TabPanel>
-        <p className="font-bold text-3xl pb-2">ChatBot</p>
         <ChatBot />
       </TabPanel>
     </Tabs>

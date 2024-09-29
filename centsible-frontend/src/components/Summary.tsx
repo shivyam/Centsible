@@ -40,29 +40,30 @@ function Summary() {
 
     return (
         <>
-            <h1 className="font-bold text-3xl">Current Level: {level}</h1>
+            <h1 className="font-bold text-3xl pb-4">Current Level: {level.charAt(0).toUpperCase() + level.slice(1)}</h1>
+            <div className="pb-4">
+                <button onClick={() => handleLevelChange("beginner")} 
+                    className={clsx("bg-blue-400 p-3 m-2 rounded-full outline-black", 
+                    {"bg-gray-200": level === "beginner"})}>
+                    Beginner
+                </button>
 
-            <button onClick={() => handleLevelChange("beginner")} 
-                className={clsx("bg-blue-600 p-2 m-2 rounded-full", 
-                {"bg-gray-200": level === "beginner"})}>
-                Beginner
-            </button>
+                <button onClick={() => handleLevelChange("intermediate")} 
+                    className={clsx("bg-blue-400 p-3 m-2 rounded-full", 
+                    {"bg-gray-200": level === "intermediate"})}>
+                    Intermediate
+                </button>
 
-            <button onClick={() => handleLevelChange("intermediate")} 
-                className={clsx("bg-blue-600 p-2 m-2 rounded-full", 
-                {"bg-gray-200": level === "intermediate"})}>
-                Intermediate
-            </button>
+                <button onClick={() => handleLevelChange("advanced")} 
+                    className={clsx("bg-blue-400 p-3 m-2 rounded-full", 
+                    {"bg-gray-200": level === "advanced"})}>
+                    Advanced
+                </button>
 
-            <button onClick={() => handleLevelChange("advanced")} 
-                className={clsx("bg-blue-600 p-2 m-2 rounded-full", 
-                {"bg-gray-200": level === "advanced"})}>
-                Advanced
-            </button>
-
+            </div>
             {/* Display the summarized data or loading indicator */}
             <div id="summary" className="text-wrap pb-4">
-                <h3 className="font-bold">Summarized Data:</h3>
+                <h3 className="font-bold pb-2">Summarized Data:</h3>
                 {loading ? (
                     <div className="flex justify-center items-center mt-4">
                         <MagnifyingGlass
@@ -86,11 +87,9 @@ function Summary() {
             <ScraperComponent
                 onScrapedData={(data: SetStateAction<string | null>) => setScrapedData(data)}
                 onSummaryData={(summarizedData: SetStateAction<string | null>) => {
-                    console.log("New Summary:", summarizedData); // Log the summary when it's updated
                     setSummarizedData(summarizedData);
                 }}
                 onKeywordsData={(keywords: SetStateAction<string | null>) => {
-                    console.log("New Keywords:", keywords); // Log the keywords when they're updated
                     setKeyWords(keywords);
                 }}
             />

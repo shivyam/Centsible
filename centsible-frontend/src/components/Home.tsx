@@ -2,7 +2,7 @@
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 
-import ChatBot from '../ChatBot.tsx';
+import ChatBot from './ChatBot.tsx';
 import Summary from './Summary.tsx';
 
 function Home() {
@@ -17,12 +17,12 @@ function Home() {
       </TabList>
 
       <TabPanel>
-        <h1 className="font-bold text-3xl">Summary</h1>
+
         <Summary />
       </TabPanel>
 
       <TabPanel>
-        <p className="font-bold text-3xl">ChatBot</p>
+
         <ChatBot />
       </TabPanel>
     </Tabs>

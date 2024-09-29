@@ -40,10 +40,6 @@ const TextComponent = (props: Props) => {
             ))}
       
         </div>
-
-   
-
-
     </>
   )
 }
