@@ -1,8 +1,8 @@
-"""
-Install the Google AI Python SDK
+from fastapi import FastAPI
+from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
-$ pip install google-generativeai
-"""
 # change it so system instructions has website summary context 
 # also want output to change in react 
 import os
@@ -14,9 +14,19 @@ from dotenv import load_dotenv
 load_dotenv()
 # python -m venv venv
 # source venv/bin/activate
+
 api_key = os.getenv("GENAI_API_KEY")
 
 genai.configure(api_key=api_key)
+
+app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Create the model
 generation_config = {
@@ -34,7 +44,9 @@ model = genai.GenerativeModel(
   # See https://ai.google.dev/gemini-api/docs/safety-settings
   system_instruction="You are a financial advisor to those who do not have much background. Eexplain concepts in detail and give examples that are easy for new learners to understand. give the user prompting questions if needed",
 )
-# app = FastAPI()
+
+
+
 # router = APIRouter()
 
 # Pydantic model for user input
@@ -60,6 +72,19 @@ model = genai.GenerativeModel(
 # # Include the router
 # app.include_router(router)
 
+
+@app.post("/userMessage")
+def getQuestion(user_message: UserMessage):
+  print(f"Received message: {user_message.message}") 
+    # Return a response (you can customize this)
+  return JSONResponse(content={"response": "hi"})
+
+
+
+
+
+
+
 print("Bot: Hi, how can I help you?")
 history_tracker =[]
 chat_session = model.start_chat(history=history_tracker)
@@ -74,3 +99,6 @@ while True:
     # Append the user input and model response to the history
     history_tracker.append({"role": "user", "content": user_input})
     history_tracker.append({"role": "model", "content": model_response})
+
+
+
