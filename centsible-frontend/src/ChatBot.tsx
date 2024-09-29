@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import TextComponent from './components/TextComponent'
+import api from '@/src/api';
+
 
 type Message = {
     user?: string;
@@ -28,12 +30,18 @@ const ChatBot = () => {
     const [input, setInput] = useState<string>();
 
 
-    const handleSubmit= () => {
+
+
+    async function handleSubmit(){
         if (input){
             console.log(input);
             setHistory([...history, {"user" : input}]);
             localStorage.setItem("history", JSON.stringify(history))
             setInput('');
+            const botResponse = await api.sendBotMessage(input);
+            setHistory([...history, {"bot" : botResponse}]);
+            localStorage.setItem("history", JSON.stringify(history))
+            
         }
 
     };
