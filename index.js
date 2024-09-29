@@ -60,3 +60,8 @@ async function summarizeData(data) {
       return `Error: ${error.message}`;
   }
 }
+
+
+var cors = require('cors')
+
+app.use(cors())

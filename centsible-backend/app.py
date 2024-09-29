@@ -1,32 +1,17 @@
 import os
-# from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import google.generativeai as genai
 
-# Load environment variables
+# Load environment variables (optional)
+# from dotenv import load_dotenv
 # load_dotenv()
 
 app = Flask(__name__)
-cors= CORS(app, origins="*")
+CORS(app, origins="*")  # Allows cross-origin requests
 
-@app.route('/')
-def home():
-    return "Hello, Flask!"
-
-# First, make sure you have Flask installed
-# Install Flask
-# $ pip install Flask
-
-
-# Load environment variables
-
-
-# Initialize Flask app
-app = Flask(__name__)
-
-# Set up API key
-api_key = "AIzaSyCNn5mn0P_rHc3SwZHoOhP3tswC9aich1Q"  # Use environment variable for security
+# Set up API key (ideally, load from environment variables for security)
+api_key = os.getenv("GOOGLE_API_KEY", "AIzaSyCChep1OQW18g5Wg5_6fRReg4JzGdI0hmI")
 genai.configure(api_key=api_key)
 
 # Model configuration
@@ -43,32 +28,40 @@ model = genai.GenerativeModel(
     generation_config=generation_config
 )
 
-# Define the chatbot endpoint
+@app.route('/')
+def home():
+    return "Hello, Flask!"
+
+# Define the chatbot endpoint to handle POST requests
 @app.route("/chatbot", methods=["POST"])
 def chatbot():
-    # Get request data
-    data = request.get_json()
-    question = data.get("question")
+    try:
+        # Get the incoming request data
+        data = request.json
+        question = data.get("question")
 
-    # Start the chat session with no history
-    chat_session = model.start_chat(history=[])
+        if not question:
+            return jsonify({"error": "Question is missing"}), 400
 
-    # Include website summary context along with the user's question
-    
-    full_question = {question}
+        print(f"User's question: {question}")
 
-    # Get the model's response to the user question
-    response = chat_session.send_message(full_question)
+        # Start the chat session with no history (if needed, you can adjust for history)
+        chat_session = model.start_chat(history=[])
 
-    # Extract the response text
-    model_response = response.candidates[0].content.parts[0].text
-    print(model_response)
+        # Send the user's question to the model
+        response = chat_session.send_message(question)
 
-    # Return the response as JSON
-    return jsonify({"response": model_response})
+        # Extract the model's response text
+        model_response = response.candidates[0].content.parts[0].text
+        print(f"Model's response: {model_response}")
 
+        # Return the model's response as JSON
+        return jsonify({"response": model_response})
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"error": "Failed to process the request"}), 500
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
-
+    app.run(debug=True, port=8000)
