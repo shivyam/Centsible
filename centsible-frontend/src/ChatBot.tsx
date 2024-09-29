@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import TextComponent from './components/TextComponent';
 import api from "./api/axiosInstance";
 
@@ -9,24 +9,11 @@ type Message = {
 
 interface BotResponse {
     response: string;  // Adjust this based on the actual structure
-  }
-  
+}
+
 const ChatBot = () => {
     const [history, setHistory] = useState<Message[]>([]);
     const [input, setInput] = useState<string>('');
-
-    // Load chat history from localStorage on mount
-    useEffect(() => {
-        const savedHistory = localStorage.getItem("history");
-        if (savedHistory) {
-            setHistory(JSON.parse(savedHistory));
-        }
-    }, []);
-
-    // Save chat history to localStorage whenever history changes
-    useEffect(() => {
-        localStorage.setItem("history", JSON.stringify(history));
-    }, [history]);
 
     // Update input as the user types
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -62,7 +49,6 @@ const ChatBot = () => {
 
     return (
         <>
-            <div className="font-bold text-3xl pb-4">Welcome!</div>
             <TextComponent history={history} />
             <div className="flex flex-col items-center gap-2">
                 <textarea

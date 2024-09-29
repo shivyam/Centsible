@@ -3,15 +3,14 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import google.generativeai as genai
 
-# Load environment variables (optional)
-# from dotenv import load_dotenv
-# load_dotenv()
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app, origins="*")  # Allows cross-origin requests
 
 # Set up API key (ideally, load from environment variables for security)
-api_key = os.getenv("GOOGLE_API_KEY", "AIzaSyCChep1OQW18g5Wg5_6fRReg4JzGdI0hmI")
+api_key = os.getenv("GOOGLE_API_KEY")
 genai.configure(api_key=api_key)
 
 # Model configuration
@@ -59,11 +58,17 @@ def chatbot():
         print(f"Error: {e}")
         return jsonify({"error": "Failed to process the request"}), 500
 
+
+
+
+
+
+
 # Define the chatbot endpoint
-@app.route("/Customize", methods=["POST"])
-def Customize():
+@app.route("/customize", methods=["POST"])
+def customize():
     # Get request data
-    data = request.get_json()
+    data = request.json
     summary = data.get("summary")
     expertise_level = data.get("expertise_level")  
 
@@ -71,14 +76,14 @@ def Customize():
     chat_session = model.start_chat(history=[])
 
     # Include website summary context along with the user's question
-    if expertise_level == "Beginner":
-         full_question = f"This is a summary of the topics I'm interested in learning about: {summary}\nI am a beginner in this topic so please explain this topic in extreme detail, giving many examples and using easy to follow language"
+    if expertise_level == "beginner":
+         full_question = f"This is a summary of the topics I'm interested in learning about: {summary}\nI am a beginner in this topic so please explain this topic in extreme detail, giving many examples and using easy to follow language. Don't include special characters in the response."
 
-    elif expertise_level == "Intermediate":
-        full_question = f"This is a summary of the topics I'm interested in learning about: {summary}\nI have a decent understanding of this topic, but I'd appreciate a more in-depth explanation with additional examples and insights to deepen my knowledge."
+    elif expertise_level == "intermediate":
+        full_question = f"This is a summary of the topics I'm interested in learning about: {summary}\nI have a decent understanding of this topic, but I'd appreciate a more in-depth explanation with additional examples and insights to deepen my knowledge. Don't include special characters in the response."
 
-    elif expertise_level == "Advance":
-        full_question = f"This is a summary of the topics I'm interested in learning about: {summary}\nI am quite familiar with this topic, so please provide a comprehensive explanation, focusing on nuanced details, advanced concepts, and practical applications."
+    elif expertise_level == "advanced":
+        full_question = f"This is a summary of the topics I'm interested in learning about: {summary}\nI am quite familiar with this topic, so please provide a comprehensive explanation, focusing on nuanced details, advanced concepts, and practical applications. Don't include special characters in the response."
 
 
     # Get the model's response to the user question
@@ -91,8 +96,13 @@ def Customize():
     # Return the response as JSON
     return jsonify({"response": model_response})
 
-@app.route("/Keywords", methods=["POST"])
-def Keywords():
+
+
+
+
+
+@app.route("/keywords", methods=["POST"])
+def keywords():
     # Get request data
     data = request.get_json()
     keywords = data.get("keywords") 

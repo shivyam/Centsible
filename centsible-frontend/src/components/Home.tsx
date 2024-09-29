@@ -1,11 +1,11 @@
-import './App.css';
+
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 
-import ChatBot from './ChatBot.tsx';
-import Summary from './components/Summary.tsx';
+import ChatBot from '../ChatBot.tsx';
+import Summary from './Summary.tsx';
 
-function App() {
+function Home() {
   return (
  
     <>
@@ -17,12 +17,12 @@ function App() {
       </TabList>
 
       <TabPanel>
-        <h1 className="font-bold text-3xl pb-2">Summary</h1>
+        <h1 className="font-bold text-3xl">Summary</h1>
         <Summary />
       </TabPanel>
 
       <TabPanel>
-        <p className="font-bold text-3xl pb-2">ChatBot</p>
+        <p className="font-bold text-3xl">ChatBot</p>
         <ChatBot />
       </TabPanel>
     </Tabs>
@@ -33,4 +33,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;

@@ -1,5 +1,4 @@
-import React from 'react';
-// import { GoogleGenerativeAI } from "@google/generative-ai";
+import React, {useEffect} from 'react';
 
 interface ScraperComponentProps {
   onScrapedData: (data: string) => void;
@@ -8,6 +7,14 @@ interface ScraperComponentProps {
 }
 
 const ScraperComponent: React.FC<ScraperComponentProps> = ({ onScrapedData, onSummaryData, onKeywordsData }) => {
+  useEffect(() => {
+    //triggers scraping when the component mounts
+    handleScrape();
+  }, []); //empty dependency array allow this effect to run once the component mounts
+
+  
+  
+  
   const handleScrape = async () => {
     try {
       const queryOptions = { active: true, currentWindow: true };
@@ -117,9 +124,8 @@ const ScraperComponent: React.FC<ScraperComponentProps> = ({ onScrapedData, onSu
   
 
   return (
-    <div>
-      <button className="border rounded-lg bg-blue-200 p-2 m-2" onClick={handleScrape}>Scrape Page</button>
-    </div>
+    <></>
+
   );
 };
 
