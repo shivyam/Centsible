@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import TextComponent from './components/TextComponent';
-
 import api from "./api/axiosInstance";
+
 type Message = {
     user?: string;
     bot?: string;
 };
 
+interface BotResponse {
+    response: string;  // Adjust this based on the actual structure
+  }
+  
 const ChatBot = () => {
     const [history, setHistory] = useState<Message[]>([]);
     const [input, setInput] = useState<string>('');
 
+    // Load chat history from localStorage on mount
     useEffect(() => {
         const savedHistory = localStorage.getItem("history");
         if (savedHistory) {
@@ -18,31 +23,39 @@ const ChatBot = () => {
         }
     }, []);
 
+    // Save chat history to localStorage whenever history changes
     useEffect(() => {
         localStorage.setItem("history", JSON.stringify(history));
     }, [history]);
 
+    // Update input as the user types
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setInput(event.target.value);
     };
 
-
-
-
+    // Handle form submission
     const handleSubmit = async () => {
-        if (input) {
+        if (input.trim()) {
             // Update history with user input
             setHistory((prev) => [...prev, { user: input }]);
-            setInput('');  // Clear input field
-            
+
             try {
-                // Call the API to get the bot response
-                const botResponse = await api.post('/chatbot', input);
-                //setHistory((prev) => [...prev, { bot: botResponse }]);
-                console.log(botResponse.response);
+                // Make a POST request to the API with the input
+                const response = await api.post('/chatbot', { question: input });
+
+                // Extract the bot's response
+                const botResponse = (response.data as BotResponse).response;
+
+                // Update history with the bot's response
+                setHistory((prev) => [...prev, { bot: botResponse }]);
             } catch (error) {
                 console.error("Error fetching bot response:", error);
-                setHistory((prev) => [...prev, { bot: "Sorry, there was an error." }]);
+
+                // Update history with a fallback message if an error occurs
+                setHistory((prev) => [...prev, { bot: "Response is null" }]);
+            } finally {
+                // Clear the input field after submitting
+                setInput('');
             }
         }
     };

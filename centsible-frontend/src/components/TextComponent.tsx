@@ -20,14 +20,14 @@ const TextComponent = (props: Props) => {
             {props.history.map((item,index) => (
                 item.bot ?         
                 <div key={index} className="w-[300px] flex gap-2 justify-start">
-                    <div className="w-10 rounded-full outline outline-1"> 
+                    <div className="w-12 h-10 rounded-full outline outline-1"> 
                         <img src={logo} />
                     </div>
                     <div className="w-fit px-6 py-2 border rounded-md">{item.bot}</div>
                 </div> 
             :
                 (item.user  ? 
-                    <div className="w-[300px] flex gap-2 justify-end">
+                    <div key={index} className="w-[300px] flex gap-2 justify-end">
                     <div className="w-fit px-6 py-2 border rounded-md">{item.user}</div>
                         <div className="w-10 rounded-full outline outline-1 flex items-center justify-center"> 
                             <IoPersonOutline />
