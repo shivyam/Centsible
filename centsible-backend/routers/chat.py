@@ -24,6 +24,7 @@ class ChatRequest(BaseModel):
 
 # Define the chatbot endpoint
 @router.post("/chatbot/" , tags=["chatbot"])
+# add summary for background 
 async def chatbot(request: ChatRequest):
     # Set up API key
     api_key = "AIzaSyCNn5mn0P_rHc3SwZHoOhP3tswC9aich1Q"
@@ -46,6 +47,7 @@ async def chatbot(request: ChatRequest):
     chat_session = model.start_chat(history=[])
 
     # Get the model's response to the user question
+    # request.question plus add  baground information 
     response = chat_session.send_message(request.question)
 
     # Extract the response text
