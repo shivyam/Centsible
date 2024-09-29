@@ -1,11 +1,24 @@
-# First, make sure you have Flask installed
-# Install Flask
-# $ pip install Flask
-
+import os
+from flask import Flask
+from dotenv import load_dotenv
 import os
 from flask import Flask, request, jsonify
 import google.generativeai as genai
 from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Hello, Flask!"
+
+# First, make sure you have Flask installed
+# Install Flask
+# $ pip install Flask
+
 
 # Load environment variables
 load_dotenv()
@@ -55,6 +68,8 @@ def chatbot():
     # Return the response as JSON
     return jsonify({"response": model_response})
 
-# Run the app
-if __name__ == "__main__":
+
+
+if __name__ == '__main__':
     app.run(debug=True)
+
