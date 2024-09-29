@@ -43,27 +43,27 @@ function Summary() {
             <h1 className="font-bold text-3xl pb-4">Current Level: {level.charAt(0).toUpperCase() + level.slice(1)}</h1>
             <div className="pb-4">
                 <button onClick={() => handleLevelChange("beginner")} 
-                    className={clsx("bg-blue-400 p-3 m-2 rounded-full outline-black", 
-                    {"bg-gray-200": level === "beginner"})}>
+                    className={clsx("bg-blue-400 p-3 m-2 rounded-full outline-black hover:bg-blue-600", 
+                    {"bg-gray-200  hover:bg-blue-400": level === "beginner"})}>
                     Beginner
                 </button>
 
                 <button onClick={() => handleLevelChange("intermediate")} 
-                    className={clsx("bg-blue-400 p-3 m-2 rounded-full", 
-                    {"bg-gray-200": level === "intermediate"})}>
+                    className={clsx("bg-blue-400 p-3 m-2 rounded-full hover:bg-blue-600", 
+                    {"bg-gray-200  hover:bg-blue-400": level === "intermediate"})}>
                     Intermediate
                 </button>
 
                 <button onClick={() => handleLevelChange("advanced")} 
-                    className={clsx("bg-blue-400 p-3 m-2 rounded-full", 
-                    {"bg-gray-200": level === "advanced"})}>
+                    className={clsx("bg-blue-400 p-3 m-2 rounded-full hover:bg-blue-600", 
+                    {"bg-gray-200 hover:bg-blue-400": level === "advanced"})}>
                     Advanced
                 </button>
 
             </div>
             {/* Display the summarized data or loading indicator */}
             <div id="summary" className="text-wrap pb-4">
-                <h3 className="font-bold pb-2">Summarized Data:</h3>
+                <h3 className="font-bold pb-2 text-lg">Summarized Data:</h3>
                 {loading ? (
                     <div className="flex justify-center items-center mt-4">
                         <MagnifyingGlass
@@ -74,7 +74,7 @@ function Summary() {
                             wrapperStyle={{}}
                             wrapperClass="magnifying-glass-wrapper"
                             glassColor="#c0efff"
-                            color="#e15b64"
+                            color="#2563eb"
                         />
                     </div>
                 ) : summarizedData ? (
@@ -96,7 +96,7 @@ function Summary() {
 
             {/* Display the keywords data */}
             <div id="keywords" className="text-wrap">
-                <h3 className="font-bold">Keywords Data:</h3>
+                <h3 className="font-bold text-lg pb-2">Keywords Data:</h3>
                 {keywords ? <p>{keywords}</p> : <p>No keywords available yet.</p>}
             </div>
         </>
