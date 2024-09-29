@@ -1,12 +1,14 @@
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import google.generativeai as genai
 
 # Load environment variables
-load_dotenv()
+# load_dotenv()
 
 app = Flask(__name__)
+cors= CORS(app, origins="*")
 
 @app.route('/')
 def home():
@@ -24,7 +26,7 @@ def home():
 app = Flask(__name__)
 
 # Set up API key
-api_key = os.getenv("AIzaSyCNn5mn0P_rHc3SwZHoOhP3tswC9aich1Q")  # Use environment variable for security
+api_key = "AIzaSyCNn5mn0P_rHc3SwZHoOhP3tswC9aich1Q"  # Use environment variable for security
 genai.configure(api_key=api_key)
 
 # Model configuration
@@ -42,7 +44,7 @@ model = genai.GenerativeModel(
 )
 
 # Define the chatbot endpoint
-@app.route("/chatbot/", methods=["POST"])
+@app.route("/chatbot", methods=["POST"])
 def chatbot():
     # Get request data
     data = request.get_json()
@@ -52,8 +54,8 @@ def chatbot():
     chat_session = model.start_chat(history=[])
 
     # Include website summary context along with the user's question
-    website_summary = "Add your website summary context here."
-    full_question = f"{website_summary} {question}"
+    
+    full_question = {question}
 
     # Get the model's response to the user question
     response = chat_session.send_message(full_question)
