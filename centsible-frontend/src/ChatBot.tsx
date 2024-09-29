@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import TextComponent from './components/TextComponent';
-import api from './api.js';
 
+import api from "./api/axiosInstance";
 type Message = {
     user?: string;
     bot?: string;
@@ -26,6 +26,9 @@ const ChatBot = () => {
         setInput(event.target.value);
     };
 
+
+
+
     const handleSubmit = async () => {
         if (input) {
             // Update history with user input
@@ -34,8 +37,9 @@ const ChatBot = () => {
             
             try {
                 // Call the API to get the bot response
-                const botResponse = await api.sendBotMessage(input);
-                setHistory((prev) => [...prev, { bot: botResponse }]);
+                const botResponse = await api.post('/chatbot', input);
+                //setHistory((prev) => [...prev, { bot: botResponse }]);
+                console.log(botResponse.response);
             } catch (error) {
                 console.error("Error fetching bot response:", error);
                 setHistory((prev) => [...prev, { bot: "Sorry, there was an error." }]);
