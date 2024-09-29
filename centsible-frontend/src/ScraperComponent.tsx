@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import axios from 'axios';
 
 interface ScraperComponentProps {
   onScrapedData: (data: string) => void;
@@ -55,6 +56,10 @@ const ScraperComponent: React.FC<ScraperComponentProps> = ({ onScrapedData, onSu
     }
   };
 
+
+
+
+
   function scrapePage() {
     const paragraphs = Array.from(document.querySelectorAll('p'));
     return paragraphs.map((p) => p.innerText);
@@ -92,36 +97,44 @@ const ScraperComponent: React.FC<ScraperComponentProps> = ({ onScrapedData, onSu
     }
   };
 
+  interface ClassifyResponse {
+    phrases: string; // Adjust this type if `phrases` is actually an array of strings, e.g., `string[]`.
+  }
+
   const getKeyWords = async (data: string): Promise<string> => {
-    const API_URL = "https://api-inference.huggingface.co/models/mayapapaya/Keyword-Extractor"; 
     try {
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer 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`, 
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          inputs: data,
-        }),
-      });
+
+      const response = await axios.post<ClassifyResponse>('http://localhost:8000/classify', {
+        text: data,
+          
       
+    });
+    let phrases = response.data.phrases;
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`API error: ${errorText}`);
-      }
-
-      const result = await response.json();
-      return result[0]?.keywords || "Failed to extract keywords";
+      phrases = formatPhrases(phrases);
+      
+      return phrases;
     } catch (error) {
-      const errorMessage = (error as Error).message;
-      console.error("Error during API call for keywords:", errorMessage);
-      return `Error: ${errorMessage}`;
+      console.error("Error classifying financial terms:", error);
+      return `Error: ${error}`;
     }
   };
 
+  const formatPhrases = (text: string): string => {
+    // Replacing patterns to add newlines for better readability.
+    // Adjust the regex as per your data structure.
   
+    // Ensure double newlines before terms and between definitions and examples
+    return text
+    .replace(/\*\*/g, '') // Remove ** from bold text
+    .replace(/\*/g, '') // Remove * from italic text
+    .replace(/(\w+):\s/g, '\n\n$1: ') // Add newline before each keyword and keep the colon
+    .replace(/\n\s*\*\*Definition:\*\*/g, '\n  Definition:') // Format "Definition" with indentation
+    .replace(/\n\s*\*\*Example:\*\*/g, '\n  Example:') // Format "Example" with indentation
+    .replace(/(\*\s)/g, '\n') // Insert a new line before each asterisk (*) indicating a new example
+    .replace(/\n{2,}/g, '\n\n') // Ensure there's a maximum of two newlines between sections
+    .trim(); // Trim any extra spaces
+  };
 
   return (
     <></>

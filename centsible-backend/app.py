@@ -116,5 +116,33 @@ def keywords():
 
     return jsonify({"response": model_response})
 
+
+
+@app.route("/classify", methods=["POST"])
+def classify():
+    try:
+        # Get request data
+        data = request.get_json()
+        text = data.get("text")
+
+        chat_session = model.start_chat(history=[])
+
+    # Include website summary context along with the user's question
+        full_question = f"This is the data from the website: {text}. Find all the finance related terms/keywords. Please define them all and provide examples when applicable. MAKE SURE TO INCLUDE NEWLINE INDICATORS WHEN NEEDED FOR FORMATTING"
+
+    # Get the model's response to the user question
+        response = chat_session.send_message(full_question)
+
+    # Extract the response text
+        model_response = response.candidates[0].content.parts[0].text
+        print(model_response)
+
+        # Return the extracted multi-word financial phrases
+        return jsonify({"phrases": model_response})
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"error": "Failed to process the request"}), 500
+
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
