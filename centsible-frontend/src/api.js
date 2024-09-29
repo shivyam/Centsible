@@ -1,16 +1,22 @@
-const BASE_URL = import.meta.env.BASE_URL;
+// src/api.js
 
-async function sendBotMessage(input){
-    const res = await feitch(BASE_URL + "/userMessage", {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: input })
-    });
-    const data= await res.json();
+const api = {
+    sendBotMessage: async (message) => {
+        const response = await fetch('/chatbot/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ question: message }),
+        });
 
-    if (!res.ok) {
-        return Promise.reject({ status: res.status, data });
-      }
-      return data;
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
 
-}
+        const data = await response.json();
+        return data.response; // Adjust based on your API response structure
+    },
+};
+
+export default api;

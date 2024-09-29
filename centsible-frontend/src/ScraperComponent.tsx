@@ -1,11 +1,13 @@
 import React from 'react';
+// import { GoogleGenerativeAI } from "@google/generative-ai";
 
 interface ScraperComponentProps {
   onScrapedData: (data: string) => void;
   onSummaryData: (summary: string) => void;
+  onKeywordsData: (keywords: string) => void;
 }
 
-const ScraperComponent: React.FC<ScraperComponentProps> = ({ onScrapedData, onSummaryData }) => {
+const ScraperComponent: React.FC<ScraperComponentProps> = ({ onScrapedData, onSummaryData, onKeywordsData }) => {
   const handleScrape = async () => {
     try {
       const queryOptions = { active: true, currentWindow: true };
@@ -31,6 +33,9 @@ const ScraperComponent: React.FC<ScraperComponentProps> = ({ onScrapedData, onSu
             // Send the scraped data to the Hugging Face API for summarization
             const summarizedData = await summarizeData(data.join(' '));
             onSummaryData(summarizedData);
+
+            const keywordsData = await getKeyWords(data.join(' '));
+            onKeywordsData(keywordsData);
           }
         );
       } else {
@@ -79,6 +84,63 @@ const ScraperComponent: React.FC<ScraperComponentProps> = ({ onScrapedData, onSu
       return `Error: ${errorMessage}`;
     }
   };
+
+  const getKeyWords = async (data: string): Promise<string> => {
+    const API_URL = "https://api-inference.huggingface.co/models/mayapapaya/Keyword-Extractor"; 
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer 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`, 
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          inputs: data,
+        }),
+      });
+      
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`API error: ${errorText}`);
+      }
+
+      const result = await response.json();
+      return result[0]?.keywords || "Failed to extract keywords";
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      console.error("Error during API call for keywords:", errorMessage);
+      return `Error: ${errorMessage}`;
+    }
+  };
+
+//   async function textGenTextOnlyPromptStreaming(keywords) {
+//     // Import the Google Generative AI library
+//     // import { GoogleGenerativeAI } from "@google/generative-ai";
+
+//     // Use your API key directly
+//     const apiKey = "YOUR_API_KEY_HERE"; // Replace with your actual API key
+//     const genAI = new GoogleGenerativeAI(apiKey);
+//     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+//     // Create a prompt from the keywords to generate definitions
+//     const prompt = `Define the following keywords: ${keywords.join(', ')}.`;
+
+//     const result = await model.generateContentStream(prompt);
+
+//     // Variable to hold the accumulated output
+//     let outputText = '';
+
+//     // Accumulate the output text as it comes in
+//     for await (const chunk of result.stream) {
+//         const chunkText = await chunk.text(); // Wait for chunk text to resolve
+//         outputText += chunkText; // Append chunk to the output variable
+//     }
+
+//     return outputText; // Return the accumulated output
+// }
+//     // [END text_gen_text_only_prompt_streaming]
+  
 
   return (
     <div>
