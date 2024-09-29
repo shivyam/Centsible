@@ -28,9 +28,6 @@ model = genai.GenerativeModel(
     generation_config=generation_config
 )
 
-@app.route('/')
-def home():
-    return "Hello, Flask!"
 
 # Define the chatbot endpoint to handle POST requests
 @app.route("/chatbot", methods=["POST"])

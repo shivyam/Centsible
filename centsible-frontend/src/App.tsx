@@ -4,12 +4,20 @@ import 'react-tabs/style/react-tabs.css';
 import ScraperComponent from './ScraperComponent.tsx';
 import { useState } from "react";
 import ChatBot from './ChatBot.tsx';
+import Summary from './components/Summary.tsx';
+
+
 function App() {
   const [scrapedData, setScrapedData] = useState<string | null>(null);
   const [summary, setSummary] = useState<string | null>(null);
   const [keywords, setKeyWords] = useState<string | null>(null);
 
+
+  const[level, setLevel] = useState("beginner");
+
+
   return (
+    <>
     <Tabs>
       <TabList>
         <Tab>Summary</Tab>
@@ -19,6 +27,10 @@ function App() {
       <TabPanel>
         <h1 className="font-bold text-3xl">Summary</h1>
         {/* Pass the state handler functions as props to ScraperComponent */}
+
+        <Summary />
+
+        
         <ScraperComponent
           onScrapedData={(data) => setScrapedData(data)}
           onSummaryData={(summary) => {
@@ -31,14 +43,9 @@ function App() {
           }}
         />
 
-        {/* Display the scraped data */}
-        <div id="output" className="text-wrap">
-          <h3 className="font-bold">Scraped Data:</h3>
-          {scrapedData ? <p className="pb-4">{scrapedData}</p> : <p className="pb-4">No data scraped yet.</p>}
-        </div>
-
+  
         {/* Display the summarized data */}
-        <div id="summary" className="text-wrap">
+        <div id="summary" className="text-wrap pb-4">
           <h3 className="font-bold">Summarized Data:</h3>
           {summary ? <p>{summary}</p> : <p>No summary available yet. </p>}
         </div>
@@ -55,6 +62,12 @@ function App() {
         <ChatBot />
       </TabPanel>
     </Tabs>
+
+
+
+    </>
+
+
   );
 }
 
