@@ -94,5 +94,27 @@ def Customize():
     # Return the response as JSON
     return jsonify({"response": model_response})
 
+@app.route("/Keywords", methods=["POST"])
+def Keywords():
+    # Get request data
+    data = request.get_json()
+    keywords = data.get("keywords") 
+
+    # Start the chat session with no history
+    chat_session = model.start_chat(history=[])
+
+    # Include website summary context along with the user's question
+    full_question = f"This is a list of {keywords} I care about. Please define them all and provide examples when applicable"
+
+    # Get the model's response to the user question
+    response = chat_session.send_message(full_question)
+
+    # Extract the response text
+    model_response = response.candidates[0].content.parts[0].text
+    print(model_response)
+
+    # Return the response as JSON
+    return jsonify({"response": model_response})
+
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
