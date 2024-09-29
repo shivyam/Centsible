@@ -111,7 +111,7 @@ const ScraperComponent: React.FC<ScraperComponentProps> = ({ onScrapedData, onSu
     });
     let phrases = response.data.phrases;
 
-      phrases = formatPhrases(phrases);
+      // phrases = formatPhrases(phrases);
       
       return phrases;
     } catch (error) {
@@ -120,21 +120,17 @@ const ScraperComponent: React.FC<ScraperComponentProps> = ({ onScrapedData, onSu
     }
   };
 
-  const formatPhrases = (text: string): string => {
-    // Replacing patterns to add newlines for better readability.
-    // Adjust the regex as per your data structure.
-  
-    // Ensure double newlines before terms and between definitions and examples
-    return text
-    .replace(/\*\*/g, '') // Remove ** from bold text
-    .replace(/\*/g, '') // Remove * from italic text
-    .replace(/(\w+):\s/g, '\n\n$1: ') // Add newline before each keyword and keep the colon
-    .replace(/\n\s*\*\*Definition:\*\*/g, '\n  Definition:') // Format "Definition" with indentation
-    .replace(/\n\s*\*\*Example:\*\*/g, '\n  Example:') // Format "Example" with indentation
-    .replace(/(\*\s)/g, '\n') // Insert a new line before each asterisk (*) indicating a new example
-    .replace(/\n{2,}/g, '\n\n') // Ensure there's a maximum of two newlines between sections
-    .trim(); // Trim any extra spaces
-  };
+  // const formatPhrases = (text: string): string => {
+  //   return text
+  //     .replace(/\*\*/g, '')
+  //     .replace(/\*/g, '')
+  //     .replace(/(\w+):\s/g, '\n\n$1: ')
+  //     .replace(/\n\s*\*\*Definition:\*\*/g, '\n  Definition:')
+  //     .replace(/\n\s*\*\*Example:\*\*/g, '\n  Example:')
+  //     .replace(/(\*\s)/g, '\n')
+  //     .replace(/\n{2,}/g, '\n\n')
+  //     .trim();
+  // };
 
   return (
     <></>
