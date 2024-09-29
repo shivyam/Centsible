@@ -1,4 +1,5 @@
 import React from 'react';
+// import { GoogleGenerativeAI } from "@google/generative-ai";
 
 interface ScraperComponentProps {
   onScrapedData: (data: string) => void;
@@ -97,6 +98,7 @@ const ScraperComponent: React.FC<ScraperComponentProps> = ({ onScrapedData, onSu
           inputs: data,
         }),
       });
+      
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -112,6 +114,33 @@ const ScraperComponent: React.FC<ScraperComponentProps> = ({ onScrapedData, onSu
     }
   };
 
+//   async function textGenTextOnlyPromptStreaming(keywords) {
+//     // Import the Google Generative AI library
+//     // import { GoogleGenerativeAI } from "@google/generative-ai";
+
+//     // Use your API key directly
+//     const apiKey = "YOUR_API_KEY_HERE"; // Replace with your actual API key
+//     const genAI = new GoogleGenerativeAI(apiKey);
+//     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+//     // Create a prompt from the keywords to generate definitions
+//     const prompt = `Define the following keywords: ${keywords.join(', ')}.`;
+
+//     const result = await model.generateContentStream(prompt);
+
+//     // Variable to hold the accumulated output
+//     let outputText = '';
+
+//     // Accumulate the output text as it comes in
+//     for await (const chunk of result.stream) {
+//         const chunkText = await chunk.text(); // Wait for chunk text to resolve
+//         outputText += chunkText; // Append chunk to the output variable
+//     }
+
+//     return outputText; // Return the accumulated output
+// }
+//     // [END text_gen_text_only_prompt_streaming]
+  
 
   return (
     <div>
