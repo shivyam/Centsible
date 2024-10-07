@@ -29,7 +29,6 @@ Centsible was developed as a **Chrome extension** using:
 - **Flask** and **Python** for the back-end API server.
 - **Google's Gemini API** for real-time market data and chatbot integration.
 - **Hugging Face** models for summarization and keyword extraction of financial terms.
-- **MongoDB** for storing user interaction histories and preferences.
 
 ## Challenges We Faced
 
@@ -67,7 +66,6 @@ Building Centsible came with a series of challenges:
 ### Back-End
 - **Flask**
 - **Python**
-- **MongoDB**
 
 ### APIs and Libraries
 - **Google's Gemini API**
