@@ -1,4 +1,8 @@
 # Centsible: Making Finance "Cents-ible"
+<center>
+<img width="502" alt="Summary" src="https://github.com/user-attachments/assets/9d6846b6-54e4-4abc-b849-8bc7cbbae209">
+<img width="502" alt="ChatBot2" src="https://github.com/user-attachments/assets/cac1ba2a-c7da-4538-ba30-80041bbd7a5a">
+</center>
 
 ## Inspiration
 
