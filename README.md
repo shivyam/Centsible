@@ -86,20 +86,18 @@ To get started with Centsible:
    npm install
 
 
-3.  **Compile and run front end in front end directory using**:
+3.  **Compile and build front end in front end directory using**:
    ```bash
+   cd centsible-frontend
    npm run build
+   ```
 
+4.  **Compile and run back end in back end directory using**:
    ```bash
-   npm run dev
-
-
-
-3.  **Compile and run back end in back end directory using**:
-   ```bash
+   cd centsible-backend
    python3 app.py
 
-4. Load the dist folder in front-end folder as unpacked in Chrome extensions to use this extension
+4. Load the dist folder in front-end folder as unpacked in Chrome extensions to use this extension. Open the extension on your financial website of choice, and choose your preferred summarization level!
 
 
 
